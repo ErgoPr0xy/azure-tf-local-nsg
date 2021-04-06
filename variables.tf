@@ -1,6 +1,6 @@
 variable "prefix" {
     type = string
-    default = "ex-kuby"
+    default = "ex-kube"
 }
 
 variable "location" {
