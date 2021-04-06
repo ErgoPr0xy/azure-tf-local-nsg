@@ -3,7 +3,7 @@ Terraform - Create Azure cluster with NSG and NSG rule
 
 HOW TO: 
 
-Open az cloudshell /n
+Open az cloudshell \
 Create new dir
 cd to new dir
 copy files to dir
