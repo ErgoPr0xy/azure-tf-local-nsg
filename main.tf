@@ -38,23 +38,31 @@ resource "azurerm_subnet" "example-subnet" {
 resource "azurerm_network_security_group" "nsg-example" {
   name                = "nsg-example"
   resource_group_name = azurerm_resource_group.cluster-rg.name
-  location            = "westeurope"
+  location            = "westeurope" 
+}
 
-  security_rule {
-    name                       = "example_outbound"
-    priority                   = 100
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "10.0.0.1"
-    destination_address_prefix = "8.8.8.8"
-  }
+data "azurerm_resources" "example" {
+  resource_group_name = azurerm_kubernetes_cluster.k8s-dev.node_resource_group
 
-  tags = {
-    environment = "nsg-rules"
-  }
+  type = "Microsoft.Network/networkSecurityGroups"
+}
+
+output name_nsg {
+    value = data.azurerm_resources.example.resources.0.name
+}
+
+resource "azurerm_network_security_rule" "example" {
+  name                        = "example"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "8.8.8.8"
+  destination_address_prefix  = "10.10.0.1"
+  resource_group_name         = azurerm_kubernetes_cluster.k8s-dev.node_resource_group
+  network_security_group_name = data.azurerm_resources.example.resources.0.name
 }
 
 resource "azurerm_kubernetes_cluster" "k8s-dev" {
