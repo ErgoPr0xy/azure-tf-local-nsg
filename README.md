@@ -4,12 +4,12 @@ Terraform - Create Azure cluster with NSG and NSG rule
 HOW TO: 
 
 Open az cloudshell \
-Create new dir
-cd to new dir
-copy files to dir
-terraform init
-if successful terraform plan -out "mycluster"
-if successful terraform apply "mycluster"
+Create new dir \
+cd to new dir \
+copy files to dir \
+terraform init \
+if successful terraform plan -out "mycluster" \
+if successful terraform apply "mycluster" \
 wait a few minutes - voila - your new auto-scaling cluster is ready to go
 
 This will create a scalable cluster with a few extras. 
