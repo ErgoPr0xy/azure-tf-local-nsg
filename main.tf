@@ -70,13 +70,15 @@ resource "azurerm_kubernetes_cluster" "k8s-dev" {
     }
     
     default_node_pool {
-        name            = "devnodes"
-        node_count      = 3
-        vm_size         = "Standard_B2s"
-        type            = "AvailabilitySet"
-        max_pods        = 30
-        vnet_subnet_id  = azurerm_subnet.example-subnet.id
-        os_disk_size_gb = 30 
+        name                = "devnodes"
+	enable_auto_scaling = true
+	max_count	    = 4
+	min_count           = 3
+        vm_size             = "Standard_B2s"
+	type                = "VirtualMachineScaleSets"
+        max_pods            = 30
+        vnet_subnet_id      = azurerm_subnet.example-subnet.id
+        os_disk_size_gb     = 30 
     }
 
     network_profile {
